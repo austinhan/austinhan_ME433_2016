@@ -55,6 +55,7 @@ int main() {
     
     // do your TRIS and LAT commands here
     TRISBbits.TRISB4 = 1;
+    TRISAbits.TRISA4 = 0;
     LATAbits.LATA4 = 1;
     
     __builtin_enable_interrupts();
@@ -66,8 +67,12 @@ int main() {
         while(_CP0_GET_COUNT() < 12000) {
             ;
         }
+        _CP0_SET_COUNT(0);
         LATAbits.LATA4 = 0;
-        while(PORTBbits.RB4 == 1) {
+        while(_CP0_GET_COUNT() < 12000) {
+            ;
+        }
+        while(PORTBbits.RB4 == 0) {
             ;
         }
 		// remember the core timer runs at half the CPU speed

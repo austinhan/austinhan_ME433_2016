@@ -190,15 +190,32 @@ void LCD_clearScreen(unsigned short color) {
 		}
 }
 
-void display_character(unsigned short x, unsigned short y, unsigned char a) {
+void display_character(unsigned short x, unsigned short y, unsigned char ch) {
     /* input char, locate on ASCII table, loop through columns, then rows*/
     if(x < 125 && y < 125) {
         char i, j;
         for(i = 0;i < 5;i++) {
-            for(j = 0;j < 8;j++) {
-                LCD_drawPixel(x+i,y+j,!(((ASCII[a-0x20][i]) & (0x80 >> j)) == (0x80 >> j))*0xFFFF);
+            unsigned char byte = ASCII[ch-0x20][i];
+            //for(j = 0;j < 8;j++) { 
+                //LCD_drawPixel(x+i,y+j,!(((ASCII[ch-0x20][i]) & (0x80 >> j)) == (0x80 >> j))*WHITE);
+            //}
+            for(j = 7;j >= 0;j--) {
+                char bit = (byte >> j) & 1;
+                if(bit == 1) {
+                    LCD_drawPixel(x+i,y+j,BLACK);
+                }
+                if(bit == 0) {
+                    LCD_drawPixel(x+i,y+j,WHITE);
+                }
             }
         }
     }
-    
+}
+
+void drawString(unsigned short x, unsigned short y, char* message) {
+    int i = 0;
+    while(message[i]) {
+        display_character(x+6*i,y,message[i]);
+        i++;
+    }
 }

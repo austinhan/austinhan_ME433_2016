@@ -96,29 +96,40 @@ int main() {
         //LCD_write(100,100,x);
         // can display 21 x 14 = 294 characters at same time
         
-//        _CP0_SET_COUNT(0);
-//        unsigned char data[14];
-//        i2c_read_multiple(SLAVE_ADDR,0x20,data,14);
-//        short temp = (data[1] << 8) | data[0];
-//        short g_x  = (data[3] << 8) | data[2];
-//        short g_y  = (data[5] << 8) | data[4];
-//        short g_z  = (data[7] << 8) | data[6];
-//        short xl_x = (data[9] << 8) | data[8];
-//        short xl_y = (data[11] << 8) | data[10];
-//        short xl_z = (data[13] << 8) | data[12];
-//        
-//        write to LCD
-//        while(_CP0_GET_COUNT() < 480000) {
-//            ;
-//        }
+        _CP0_SET_COUNT(0);
+        unsigned char data[14];
+        i2c_read_multiple(SLAVE_ADDR,0x20,data,14);
+        short temp = (data[1] << 8) | data[0];
+        short g_x  = (data[3] << 8) | data[2];
+        short g_y  = (data[5] << 8) | data[4];
+        short g_z  = (data[7] << 8) | data[6];
+        short xl_x = (data[9] << 8) | data[8];
+        short xl_y = (data[11] << 8) | data[10];
+        short xl_z = (data[13] << 8) | data[12];
         
-        char message[20];
-        int a = 1337;
-        sprintf(message,"Hello world %d",a);
-        int i = 0;
-        while(message[i]) {
-            display_character(30+6*i,30,message[i]);
-            i++;
+        char message[100];
+        sprintf(message,"temp %d   ",temp);
+        drawString(5,5,message);
+        sprintf(message,"g_x %d   ",g_x);
+        drawString(5,15,message);
+        sprintf(message,"g_y %d   ",g_y);
+        drawString(5,25,message);
+        sprintf(message,"g_z %d   ",g_z);
+        drawString(5,35,message);
+        sprintf(message,"xl_x %d   ",xl_x);
+        drawString(5,45,message);
+        sprintf(message,"xl_y %d   ",xl_y);
+        drawString(5,55,message);
+        sprintf(message,"xl_z %d   ",xl_z);
+        drawString(5,65,message);
+        
+        while(_CP0_GET_COUNT() < 480000) {
+            ;
         }
+        
+        
+//        int a = 1337;
+//        sprintf(message,"Hello world %d",a);
+//        drawString(28,32,message);
     }
 }

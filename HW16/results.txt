@@ -1,0 +1,10 @@
+Austin Han
+ME433
+6/6/2016
+HW16 Results
+
+One slider was used in the app to adjust the the threshold 
+for what green-red difference would cause the pixel to be 
+counted as black or white. The app sent the COM to the PIC. 
+The PIC used the deviation of the COM the center to determine
+the relative speeds of the left and right motors. 
